@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lógica Quest: O Jogo</title>
+    <!-- Importação da fonte estilo videogame -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- MathJax para renderizar as fórmulas lógicas -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$']] } };
+    </script>
+    <style>
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background-color: #0b0c10;
+            color: #66fcf1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        h1 {
+            color: #45a29e;
+            text-shadow: 2px 2px #000;
+            font-size: 24px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #1f2833;
+            padding: 30px;
+            border: 4px solid #66fcf1;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #66fcf1;
+        }
+        .menu-btn {
+            background-color: transparent;
+            color: #66fcf1;
+            border: 2px solid #66fcf1;
+            padding: 15px 20px;
+            margin: 10px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 80%;
+        }
+        .menu-btn:hover {
+            background-color: #66fcf1;
+            color: #0b0c10;
+        }
+        .question-text {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .option-btn {
+            background: #0b0c10;
+            color: #c5c6c7;
+            border: 2px solid #45a29e;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 16px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .option-btn:hover:not(:disabled) {
+            border-color: #66fcf1;
+            background: #1f2833;
+        }
+        .correct {
+            background-color: #28a745 !important;
+            color: #fff !important;
+            border-color: #fff !important;
+        }
+        .wrong {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+            border-color: #fff !important;
+        }
+        #feedback {
+            margin-top: 25px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #ffeb3b;
+        }
+        #next-btn, #restart-btn {
+            display: none;
+            margin-top: 25px;
+            background: #45a29e;
+            color: #0b0c10;
+            border: none;
+            padding: 15px 20px;
+            font-family: 'Press Start 2P', monospace;
+            cursor: pointer;
+            width: 100%;
+        }
+        #next-btn:hover, #restart-btn:hover {
+            background: #66fcf1;
+        }
+        #quiz-screen, #result-screen {
+            display: none;
+        }
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #c5c6c7;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LÓGICA MATEMÁTICA<br>QUEST</h1>
+
+    <!-- Tela Inicial -->
+    <div id="start-screen" class="container">
+        <p>Selecione a fase para começar a revisão:</p>
+        <button class="menu-btn" onclick="startBlock(0)">FASE 1: Argumentos Básicos (Q1-Q10)</button>
+        <button class="menu-btn" onclick="startBlock(1)">FASE 2: Múltiplas Premissas (Q11-Q20)</button>
+        <button class="menu-btn" onclick="startBlock(2)">FASE 3: Maior Complexidade (Q21-Q30)</button>
+    </div>
+
+    <!-- Tela do Quiz -->
+    <div id="quiz-screen" class="container">
+        <div class="hud">
+            <span id="progress">Questão: 1/10</span>
+            <span id="score">XP: 0</span>
+        </div>
+        <div id="question-text" class="question-text"></div>
+        <div id="options" class="options-container"></div>
+        <div id="feedback"></div>
+        <button id="next-btn" onclick="nextQuestion()">PRÓXIMA FASE &gt;</button>
+    </div>
+
+    <!-- Tela de Resultados -->
+    <div id="result-screen" class="container">
+        <h2>FIM DE JOGO</h2>
+        <p id="final-score" style="margin: 30px 0; line-height: 2;"></p>
+        <button id="restart-btn" style="display: block;" onclick="location.reload()">VOLTAR AO MENU PRINCIPAL</button>
+    </div>
+
+    <script>
+        // Banco de Dados Completo com todas as questões e formatação LaTeX
+        const allQuestions = [
+            // ================= BLOCO 1 =================
+            {
+                q: "1. Computador e tela: Se o computador estiver ligado, a tela estará acesa. A tela não está acesa. Portanto, o computador não está ligado.[cite: 1]",
+                opts: ["A) $L\\rightarrow T,T...L$[cite: 1]", "B) $L\\rightarrow T,\\neg T::\\neg L$[cite: 1]", "C) $LV~T,\\neg T:L$[cite: 1]", "D) $L\\wedge T,\\neg T::\\neg L$[cite: 1]", "E) $T\\rightarrow L,\\neg T:\\neg L$[cite: 1]"],
+                ans: 1, just: "Modus Tollens: L→Te T permitem concluir -L.[cite: 10]"
+            },
+            {
+                q: "2. Viagem de Mariana: Mariana viajará para São Paulo ou para o Rio de Janeiro. Mariana não viajará para São Paulo. Portanto, viajará para o Rio de Janeiro.[cite: 1]",
+                opts: ["A) Modus Ponens[cite: 1]", "B) Modus Tollens[cite: 1]", "C) Silogismo Hipotético[cite: 1]", "D) Silogismo Disjuntivo[cite: 1]", "E) Simplificação[cite: 1]"],
+                ans: 3, just: "Silogismo Disjuntivo: Sv Re-S permitem concluir R.[cite: 10]"
+            },
+            {
+                q: "3. Estudo para a prova: Se o aluno estudar para a prova, obterá uma boa nota. O aluno estudou para a prova. Portanto, obterá uma boa nota.[cite: 1]",
+                opts: ["A) $E\\rightarrow N,E::N$[cite: 1]", "B) $E\\rightarrow N,\\neg N::\\neg E$[cite: 1]", "C) $E\\vee N,\\neg E:N$[cite: 1]", "D) $N\\rightarrow E,E::N$[cite: 1]", "E) $E\\rightarrow N,N\\cdot:E$[cite: 1]"],
+                ans: 0, just: "Modus Ponens: $E\\rightarrow N$ Ne E permitem concluir N.[cite: 10]"
+            },
+            {
+                q: "4. Chuva e jogo: Se chover amanhã, o jogo será cancelado. Se o jogo for cancelado, o estádio ficará vazio. Vai chover amanhã. Portanto, o estádio ficará vazio.[cite: 2]",
+                opts: ["A) $C\\rightarrow J,V\\rightarrow J,C::V$[cite: 2]", "B) $C\\rightarrow J,J\\rightarrow V,\\neg C::V$[cite: 2]", "C) $C\\rightarrow j,J\\rightarrow V,C::V$[cite: 2]", "D) $C~v~J,J\\rightarrow V,C::V$[cite: 2]", "E) $C\\rightarrow V,V\\rightarrow j,C::J$[cite: 2]"],
+                ans: 2, just: "Encadeiam-se C→ JeJV; com C, conclui-se V.[cite: 10]"
+            },
+            {
+                q: "5. Promoção de Carlos: Carlos será promovido se, e somente se, atingir suas metas. Carlos atingiu suas metas. Portanto, será promovido.[cite: 2]",
+                opts: ["A) $P\\rightarrow M,M::\\neg P$[cite: 2]", "B) $PvM,M...P$[cite: 2]", "C) $P\\leftrightarrow M,\\neg M...\\neg P$[cite: 2]", "D) $M\\rightarrow P,\\neg M::\\neg P$[cite: 2]", "E) $P\\leftrightarrow M,M...P$[cite: 2]"],
+                ans: 4, just: "$P\\leftrightarrow M$ inclui $M\\rightarrow P$; como M, conclui-se P.[cite: 10]"
+            },
+            {
+                q: "6. Profissão de Pedro: Pedro é médico ou advogado. Pedro não é médico. Portanto, Pedro é advogado.[cite: 2]",
+                opts: ["A) $1\\wedge A,\\neg M:\\cdot A$[cite: 2]", "B) $M\\rightarrow A,\\neg M::A$[cite: 2]", "C) $M\\vee A,\\neg M::A$[cite: 2]", "D) $Mv~A,M...A$[cite: 2]", "E) $M\\leftrightarrow A,\\neg M::A$[cite: 2]"],
+                ans: 2, just: "Silogismo Disjuntivo: M vA e-M permitem concluir A.[cite: 10]"
+            },
+            {
+                q: "7. Biblioteca aberta: Se a biblioteca estiver aberta, os estudantes poderão estudar. A biblioteca está aberta. Portanto, os estudantes poderão estudar.[cite: 2]",
+                opts: ["A) Modus Tollens[cite: 2]", "B) Modus Ponens[cite: 2]", "C) Silogismo Disjuntivo[cite: 2]", "D) Dupla Negação[cite: 2]", "E) Silogismo Hipotético[cite: 2]"],
+                ans: 1, just: "Modus Ponens: B → E e B permitem concluir E.[cite: 10]"
+            },
+            {
+                q: "8. Falha no servidor: Se o servidor apresentar uma falha, o sistema ficará indisponível. O sistema está disponível. Portanto, o servidor não apresentou uma falha.[cite: 3]",
+                opts: ["A) $F\\rightarrow1,1:.F$[cite: 3]", "B) $F:v|,\\neg1:.F$[cite: 3]", "C) $I\\rightarrow F,\\neg1:\\neg F$[cite: 3]", "D) $F\\rightarrow|,\\neg|:\\neg F$[cite: 3]", "E) $F\\rightarrow1,\\neg F::\\neg I$[cite: 3]"],
+                ans: 3, just: "Modus Tollens: Flel permitem concluir -F.[cite: 10]"
+            },
+            {
+                q: "9. Preços e garantia: A loja reduzirá os preços ou aumentará o prazo de garantia. A loja não reduzirá os preços. Portanto, aumentará o prazo de garantia.[cite: 3]",
+                opts: ["A) Modus Ponens[cite: 3]", "B) Modus Tollens[cite: 3]", "C) Conjunção[cite: 3]", "D) Silogismo Disjuntivo[cite: 3]", "E) Silogismo Hipotético[cite: 3]"],
+                ans: 3, just: "Silogismo Disjuntivo: P v Ge-P permitem concluir G.[cite: 10]"
+            },
+            {
+                q: "10. Trabalho de Ana: Se Ana concluir o trabalho, poderá descansar. Ana concluiu o trabalho. Portanto, poderá descansar.[cite: 3]",
+                opts: ["A) $T\\rightarrow D,T:D$ por Modus Ponens.[cite: 3]", "B) $T\\rightarrow D,\\neg D::\\neg T$ , por Modus Ponens.[cite: 3]", "C) $T\\vee D,\\neg T\\cdot\\cdot\\cdot D$ por Modus Tollens.[cite: 3]", "D) $D\\rightarrow T,T::D$ por Silogismo Hipotético.[cite: 3]", "E) $T\\rightarrow D$, D. T, por Modus Ponens.[cite: 3]"],
+                ans: 0, just: "Modus Ponens: T→ De T permitem concluir D.[cite: 10]"
+            },
+
+            // ================= BLOCO 2 =================
+            {
+                q: "11. Juros e mercado imobiliário: Se os juros aumentarem, os financiamentos ficarão mais caros. Se os financiamentos ficarem mais caros, as vendas de imóveis diminuirão. Os juros aumentaram. Portanto, as vendas de imóveis diminuirão.[cite: 4]",
+                opts: ["A) Silogismo Disjuntivo[cite: 4]", "B) Modus Tollens[cite: 4]", "C) Silogismo Hipotético[cite: 4]", "D) Simplificação[cite: 4]", "E) Adição[cite: 4]"],
+                ans: 2, just: "Silogismo Hipotético encadeia J→ Fe F V; depois, MP com J.[cite: 10]"
+            },
+            {
+                q: "12. Atraso no trabalho: Se o funcionário chegar atrasado, receberá uma advertência. Se receber uma advertência, poderá perder o bônus. O funcionário chegou atrasado. Portanto, poderá perder o bônus.[cite: 4]",
+                opts: ["A) $A\\rightarrow D$ $D\\rightarrow B,A\\therefore B$ usando Modus Ponens duas vezes.[cite: 4]", "B) $A\\rightarrow D,D\\rightarrow B,A\\therefore..B$, usando Modus Tollens duas vezes.[cite: 4]", "C) $A\\rightarrow D,D\\rightarrow B,\\neg A:B$, usando Silogismo Hipotético.[cite: 4]", "D) $A\\vee D$, $D\\rightarrow B,A\\therefore B$ usando Silogismo Disjuntivo.[cite: 4]", "E) $A\\rightarrow D$, $B\\rightarrow D,A::B$, usando Modus Ponens..[cite: 4]"],
+                ans: 0, just: "MP em sequência: A permite D; D permite B.[cite: 10]"
+            },
+            {
+                q: "13. Campeonato: Se o time vencer a semifinal, disputará a final. Se disputar a final, poderá conquistar o campeonato. O time venceu a semifinal. Portanto, poderá conquistar o campeonato.[cite: 4]",
+                opts: ["A) -S[cite: 4]", "B) -C[cite: 4]", "C) $F\\rightarrow S$[cite: 4]", "D) $S\\rightarrow C$ mas não é possível concluir C.[cite: 4]", "E) C, obtida pelo encadeamento das condicionais e Modus Ponens.[cite: 4]"],
+                ans: 4, just: "S FeF C dão $S\\rightarrow C$ com S, conclui-se C.[cite: 10]"
+            },
+            {
+                q: "14. Produto com defeito: Se o produto apresentar defeito, será substituído ou reparado. O produto apresentou defeito. Ele não será substituído. Portanto, será reparado.[cite: 4]",
+                opts: ["A) $D\\rightarrow(S\\wedge R),D,\\neg S:.R$[cite: 4]", "B) D (S v R), D, S. R[cite: 4]", "C) $D\\rightarrow(S\\vee R),\\neg D,\\neg S::R$[cite: 4]", "D) Dv (SAR), D, SR[cite: 4]", "E) $D\\rightarrow S,D,\\neg S::R$[cite: 4]"],
+                ans: 1, just: "De D (S v R) e D, obtemos $S\\vee R$; com -S, obtemos R.[cite: 10]"
+            },
+            {
+                q: "15. Investimento empresarial: Se a empresa investir em tecnologia e capacitação, sua produtividade aumentará. A empresa investiu em tecnologia e capacitação. Portanto, sua produtividade aumentará.[cite: 5]",
+                opts: ["A) $(T~v~C)\\rightarrow P,T\\wedge C:..P$[cite: 5]", "B) $T\\wedge C\\rightarrow P,T::P$[cite: 5]", "C) $T\\wedge C\\rightarrow P,\\neg T\\wedge\\neg C::P$[cite: 5]", "D) $(T\\wedge C)\\rightarrow P,T\\wedge C:..P$[cite: 5]", "E) $T\\rightarrow(C\\wedge P),T\\wedge C:..P$[cite: 5]"],
+                ans: 3, just: "A premissa $\\mathfrak{E}(T\\wedge C)\\rightarrow P;$ com $T\\wedge C$ por MP, conclui-se P.[cite: 10]"
+            },
+            {
+                q: "16. Trânsito e reunião: Se o trânsito estiver intenso, chegarei atrasado. Se eu chegar atrasado, perderei a reunião. Não perdi a reunião. Portanto, o trânsito não estava intenso.[cite: 5]",
+                opts: ["A) Modus Ponens duas vezes.[cite: 5]", "B) Silogismo Disjuntivo.[cite: 5]", "C) Modus Tollens aplicado regressivamente às condicionais.[cite: 5]", "D) Simplificação.[cite: 5]", "E) Adição.[cite: 5]"],
+                ans: 2, just: "De-R, MT dá A; depois, MT dá -T.[cite: 10]"
+            },
+            {
+                q: "17. Inflação e economia: Se a inflação diminuir, o poder de compra aumentará. Se o poder de compra aumentar, o consumo crescerá. Se o consumo crescer, a economia poderá se expandir. A inflação diminuiu. Portanto, a economia poderá se expandir.[cite: 5]",
+                opts: ["A) -E[cite: 5]", "B) $I\\rightarrow E$ mas não se pode concluir E.[cite: 5]", "C) IAPACE[cite: 5]", "D) $(1\\rightarrow P,P\\rightarrow C,C\\rightarrow E,\\neg1:..E$[cite: 5]", "E) IP, PC, CE, I E[cite: 5]"],
+                ans: 4, just: "Encadeiam-se IP, $P\\rightarrow C~e~C\\rightarrow E$ com I, conclui-se E.[cite: 10]"
+            },
+            {
+                q: "18. Aprovação na disciplina: Se o estudante entregar o trabalho e participar do seminário, será aprovado na disciplina. O estudante entregou o trabalho. Ele participou do seminário. Portanto, será aprovado na disciplina.[cite: 5]",
+                opts: ["A) $(T~v~S)\\rightarrow A,T,S...A$[cite: 5]", "B) $T\\wedge S\\rightarrow A,T,S::A$[cite: 5]", "C) $T\\wedge S\\rightarrow A,T\\wedge S::A$[cite: 5]", "D) $T\\rightarrow A,S::A$[cite: 5]", "E) $T\\wedge S\\rightarrow A,\\neg T,\\neg S::A$[cite: 5]"],
+                ans: 2, just: "De Te S formamos T A S; com $(T\\wedge S)\\rightarrow A,$ concluímos A.[cite: 10]"
+            },
+            {
+                q: "19. Atualização do aplicativo: Se o aplicativo for atualizado, terá novos recursos ou melhor desempenho. O aplicativo foi atualizado. Ele não apresenta novos recursos. Portanto, terá melhor desempenho.[cite: 6]",
+                opts: ["A) A→ (NvD), A, -N. D[cite: 6]", "B) $A\\rightarrow(N\\wedge D),A,\\neg N\\cdot\\cdot\\cdot D$[cite: 6]", "C) $A\\rightarrow(N\\vee D),\\neg A,\\neg N::D$[cite: 6]", "D) AN, A, -N. D[cite: 6]", "E) A v (ND), A, -N. D[cite: 6]"],
+                ans: 0, just: "MP produz $N\\vee D$ com -N, o Silogismo Disjuntivo dá D.[cite: 11]"
+            },
+            {
+                q: "20. Energia e computadores: Se a energia acabar, os computadores desligarão. Se os computadores desligarem, o trabalho será interrompido. O trabalho não foi interrompido. Portanto, a energia não acabou.[cite: 6]",
+                opts: ["A) E, por Modus Ponens.[cite: 6]", "B) C, por Silogismo Disjuntivo.[cite: 6]", "C) -T, por Modus Tollens.[cite: 6]", "D) -E, por aplicação de Modus Tollens às condicionais.[cite: 6]", "E) T, por Silogismo Hipotético.[cite: 6]"],
+                ans: 3, just: "MT regressivo: -T implica C, $e\\neg C$ implica -E.[cite: 11]"
+            },
+
+            // ================= BLOCO 3 =================
+            {
+                q: "21. Lucro empresarial: A empresa terá lucro se, e somente se, suas receitas superarem suas despesas. As receitas da empresa superaram suas despesas. Portanto, a empresa terá lucro.[cite: 7]",
+                opts: ["A) $L\\rightarrow R,R::\\neg L$[cite: 7]", "B) $L\\leftrightarrow R,R::L$[cite: 7]", "C) $~L\\vee R,\\neg R::L$[cite: 7]", "D) $R\\rightarrow L,\\neg R::\\neg L$[cite: 7]", "E) $L\\leftrightarrow R,\\neg R::L$[cite: 7]"],
+                ans: 1, just: "LR inclui R→ L; de R, conclui-se L.[cite: 11]"
+            },
+            {
+                q: "22. Eleição e promessas: Se o candidato vencer a eleição, assumirá o cargo. Se assumir o cargo, deverá cumprir suas promessas. O candidato não cumprirá suas promessas. Portanto, não vencerá a eleição.[cite: 7]",
+                opts: ["A) V, por Modus Ponens.[cite: 7]", "B) -A, por Modus Ponens.[cite: 7]", "C) -V, por aplicação de Modus Tollens às condicionais.[cite: 7]", "D) P, por Silogismo Hipotético.[cite: 7]", "E) $\\neg P::V$ por Silogismo Disjuntivo.[cite: 7]"],
+                ans: 2, just: "De P, MT dá A; de A, MT dá -V.[cite: 11]"
+            },
+            {
+                q: "23. Laboratório e experimentos: Se o laboratório estiver funcionando, os pesquisadores realizarão os experimentos. Se os pesquisadores realizarem os experimentos, publicarão os resultados. O laboratório está funcionando. Portanto, os resultados serão publicados.[cite: 7]",
+                opts: ["A) $L\\rightarrow E,E\\rightarrow P,L::P$[cite: 7]", "B) $L\\rightarrow E,P\\rightarrow E,L:..P$[cite: 7]", "C) $L~v~E,E\\rightarrow P,L::P$[cite: 7]", "D) $L\\rightarrow E,E\\rightarrow P,\\neg L:..P$[cite: 7]", "E) $L\\rightarrow E,E\\rightarrow P,P::L$[cite: 7]"],
+                ans: 0, just: "L EeEP formam $L\\rightarrow P;$ com L, conclui-se P.[cite: 11]"
+            },
+            {
+                q: "24. Compra de celular: Se Lucas comprar um celular, comprará um modelo novo ou usado. Lucas não comprará um modelo novo. Logo, se Lucas comprar um celular, comprará um modelo usado.[cite: 7]",
+                opts: ["A) $C\\rightarrow(N\\wedge U),\\neg N::C\\rightarrow U$[cite: 7]", "B) $C~v(N~v~U),\\neg N::C\\rightarrow U$[cite: 7]", "C) $C\\rightarrow(N~\\vee U),N::C\\rightarrow U$[cite: 7]", "D) $C\\rightarrow(N~v~U),\\neg U:C\\rightarrow N$[cite: 7]", "E) $C\\rightarrow(N~v~U),\\neg N::C\\rightarrow U$[cite: 7]"],
+                ans: 4, just: "Dentro da hipótese C, $N~v\\cup e\\neg N$ deixam U; logo $C\\rightarrow U$[cite: 11]"
+            },
+            {
+                q: "25. Regra justa: Se a regra for justa e aplicada igualmente a todos, será respeitada. A regra é justa e aplicada igualmente a todos. Portanto, será respeitada.[cite: 8]",
+                opts: ["A) $(\\rfloor v|)\\rightarrow R,\\rfloor\\wedge1:..R$[cite: 8]", "B) $(\\rfloor\\wedge I)\\rightarrow R,\\rfloor\\wedge1::R$[cite: 8]", "C) $(\\rfloor\\wedge I)\\rightarrow R,\\neg\\rfloor\\wedge\\neg1:R$[cite: 8]", "D) $J\\rightarrow1,1:R$[cite: 8]", "E) $J\\leftrightarrow1,J::R$[cite: 8]"],
+                ans: 1, just: "( )  ReJA I permitem concluir R por MP.[cite: 11]"
+            },
+            {
+                q: "26. Segurança do sistema: Se o sistema estiver seguro, haverá autenticação em duas etapas. Se houver autenticação em duas etapas, o acesso não autorizado será dificultado. O acesso não autorizado não foi dificultado. Portanto, o sistema não estava seguro.[cite: 8]",
+                opts: ["A) S, por Modus Ponens.[cite: 8]", "B) -A, mas não é possível concluir nada sobre S.[cite: 8]", "C) D, por Silogismo Hipotético.[cite: 8]", "D) -S, por encadeamento das condicionais e Modus Tollens.[cite: 8]", "E) SA, por bicondicional.[cite: 8]"],
+                ans: 3, just: "De-D, MT dá A; depois, de $S\\rightarrow A,$ MT dá -S.[cite: 11]"
+            },
+            {
+                q: "27. Raciocínio lógico: Se Marina estudar matemática, melhorará seu raciocínio lógico. Se melhorar seu raciocínio lógico, resolverá problemas com mais facilidade. Marina não resolve problemas com mais facilidade. Portanto, Marina não estudou matemática.[cite: 8]",
+                opts: ["A) M, por Modus Ponens.[cite: 8]", "B) -R, mas não se pode concluir -M.[cite: 8]", "C) -M, por aplicação de Modus Tollens às condicionais.[cite: 8]", "D) P, por Silogismo Hipotético.[cite: 8]", "E) $M\\rightarrow P$ P. M.[cite: 8]"],
+                ans: 2, just: "De P, MT dá R; depois, de $M\\rightarrow R$, MT dá - M.[cite: 11]"
+            },
+            {
+                q: "28. Aprovação de projeto: Se o projeto for aprovado, receberá financiamento e terá início no próximo semestre. Se receber financiamento e tiver início no próximo semestre, contratará novos funcionários. O projeto foi aprovado. Portanto, contratará novos funcionários.[cite: 8]",
+                opts: ["A) $A\\rightarrow(F\\vee I),(F\\wedge I)\\rightarrow C,A\\%//C$[cite: 8]", "B) $A\\rightarrow(F\\wedge I),(F\\wedge I)\\rightarrow C,A::C$[cite: 8]", "C) $A\\rightarrow(F\\wedge I),(F\\vee I)\\rightarrow C,A::C$[cite: 8]", "D) $A\\rightarrow(F\\wedge I),C\\rightarrow(F\\wedge I),A::C$[cite: 8]", "E) $A~v(F\\wedge I),(F\\wedge I)\\rightarrow C,A:.C$[cite: 8]"],
+                ans: 1, just: "A implica FA  ; essa conjunção ativa $(F\\wedge I)\\rightarrow C$[cite: 11]"
+            },
+            {
+                q: "29. Evento presencial ou on-line: O evento acontecerá presencialmente ou on-line. Se acontecer presencialmente, será realizado no auditório. Se acontecer on-line, será transmitido pela internet. O evento não será realizado no auditório. Portanto, será transmitido pela internet.[cite: 9]",
+                opts: ["A) $P\\vee O$, $P\\rightarrow A$, $O\\rightarrow T,\\neg A:T$ por Modus Ponens.[cite: 9]", "B) $P\\vee O$, $P\\rightarrow A$, $O\\rightarrow T,\\neg A:\\neg T$ por Modus Tollens.[cite: 9]", "C) РЛО, РА, OT, A T, por Simplificação.[cite: 9]", "D) $P\\vee O$, $P\\rightarrow A,$ $O\\rightarrow T,\\neg A::T$ por Modus Tollens, Silogismo Disjuntivo e Modus Ponens.[cite: 9]", "E) $P\\vee O$, $P\\rightarrow A$ $O\\rightarrow T,A:T$ por Silogismo Hipotético.[cite: 9]"],
+                ans: 3, just: "MT dá -P; SD dá O; MP dá T.[cite: 11]"
+            },
+            {
+                q: "30. Contrato e treinamento: Se Roberto aceitar a proposta e assinar o contrato, começará a trabalhar na segunda-feira. Se começar a trabalhar na segunda-feira, receberá treinamento. Roberto aceitou a proposta e assinou o contrato. Portanto, receberá treinamento.[cite: 9]",
+                opts: ["A) (A v C) → S, ST, Ал[cite: 9]", "B) $(A\\wedge C)\\rightarrow S,T\\rightarrow S,A\\wedge C::T$[cite: 9]", "C) $(A\\wedge C)\\rightarrow S,S\\rightarrow T,\\neg(A\\wedge C)::T$[cite: 9]", "D) $(A\\wedge C)\\rightarrow S,S\\rightarrow T,A\\wedge C::S$, sem possibilidade de concluir T.[cite: 9]", "E) (Ал ) S, SΤ, Α ΛСТ[cite: 9]"],
+                ans: 4, just: "Ал C permite concluir S; de S→ T, concluímos T.[cite: 11]"
+            }
+        ];
+
+        let currentBlock = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function startBlock(blockIndex) {
+            // Separa as questões de 10 em 10 baseado na escolha
+            const start = blockIndex * 10;
+            currentBlock = allQuestions.slice(start, start + 10);
+            currentIndex = 0;
+            score = 0;
+            
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = currentBlock[currentIndex];
+            
+            document.getElementById('progress').innerText = `Questão: ${currentIndex + 1}/10`;
+            document.getElementById('score').innerText = `XP: ${score * 100}`;
+            document.getElementById('question-text').innerHTML = q.q;
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('next-btn').style.display = 'none';
+            
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            
+            q.opts.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = opt;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsDiv.appendChild(btn);
+            });
+
+            // Força o MathJax a renderizar as novas fórmulas na tela
+            MathJax.typesetPromise();
+        }
+
+        function checkAnswer(selectedIndex, btn) {
+            if (answered) return;
+            answered = true;
+            
+            const q = currentBlock[currentIndex];
+            const allBtns = document.querySelectorAll('.option-btn');
+            
+            // Desabilita os botões após a resposta
+            allBtns.forEach(b => b.disabled = true);
+            
+            if (selectedIndex === q.ans) {
+                btn.classList.add('correct');
+                document.getElementById('feedback').innerHTML = `✅ ACERTOU! +100 XP<br><br><strong>Explicação:</strong> ${q.just}`;
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.ans].classList.add('correct');
+                const letras = ['A', 'B', 'C', 'D', 'E'];
+                document.getElementById('feedback').innerHTML = `❌ GAME OVER! A correta era a alternativa ${letras[q.ans]}.<br><br><strong>Explicação:</strong> ${q.just}`;
+            }
+            
+            // Renderiza novamente a matemática, caso o texto da explicação tenha símbolos
+            MathJax.typesetPromise();
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentBlock.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('final-score').innerHTML = `Fase Concluída!<br>Acertos: ${score}/10<br>Total de XP: ${score * 100}`;
+        }
+    </script>
+</body>
+</html>
