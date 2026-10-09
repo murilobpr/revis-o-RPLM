@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lógica Quest: O Jogo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="[https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap](https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap)" rel="stylesheet">
     <style>
         body {
             font-family: 'Press Start 2P', monospace;
@@ -92,7 +92,6 @@
             color: #ffeb3b;
         }
         
-        /* Estilos dos botões de navegação */
         .nav-container {
             display: flex;
             gap: 15px;
@@ -157,7 +156,7 @@
     <div id="quiz-screen" class="container">
         <div class="hud">
             <span id="progress">Questão: 1/10</span>
-            <span id="score">XP: 0</span>
+            <span id="score">Pontuação: 0/10</span>
         </div>
         <div id="question-text" class="question-text"></div>
         <div id="options" class="options-container"></div>
@@ -359,12 +358,12 @@
             const q = currentBlock[currentIndex];
             
             document.getElementById('progress').innerText = `Questão: ${currentIndex + 1}/10`;
-            document.getElementById('score').innerText = `XP: ${score * 100}`;
+            document.getElementById('score').innerText = `Pontuação: ${score}/10`;
             document.getElementById('question-text').innerHTML = q.q;
             document.getElementById('feedback').innerHTML = '';
             
             const nextBtn = document.getElementById('next-btn');
-            nextBtn.style.display = 'none';
+            nextBtn.style.display = 'none'; 
             
             if (currentIndex === currentBlock.length - 1) {
                 nextBtn.innerHTML = "VER RESULTADOS &gt;";
@@ -395,17 +394,18 @@
             
             if (selectedIndex === q.ans) {
                 btn.classList.add('correct');
-                document.getElementById('feedback').innerHTML = `✅ ACERTOU! +100 XP<br><br><strong>Explicação:</strong> ${q.just}`;
+                document.getElementById('feedback').innerHTML = `✅ ACERTOU!<br><br><strong>Explicação:</strong> ${q.just}`;
                 score++;
-                document.getElementById('score').innerText = `XP: ${score * 100}`;
+                document.getElementById('score').innerText = `Pontuação: ${score}/10`;
             } else {
                 btn.classList.add('wrong');
                 allBtns[q.ans].classList.add('correct');
                 const letras = ['A', 'B', 'C', 'D', 'E'];
-                document.getElementById('feedback').innerHTML = `❌ GAME OVER! A correta era a alternativa ${letras[q.ans]}.<br><br><strong>Explicação:</strong> ${q.just}`;
+                document.getElementById('feedback').innerHTML = `❌ INCORRETO! A correta era a alternativa ${letras[q.ans]}.<br><br><strong>Explicação:</strong> ${q.just}`;
             }
             
-            document.getElementById('next-btn').style.display = 'block';
+            // Agora o botão de avançar aparecerá corretamente após a resposta
+            document.getElementById('next-btn').style.display = 'inline-block';
         }
 
         function nextQuestion() {
@@ -437,8 +437,7 @@
             
             document.getElementById('final-score').innerHTML = `
                 Fase Concluída!<br><br>
-                Acertos: ${score}/10<br>
-                Total Ganho: ${score * 100} XP<br><br>
+                Pontuação Final: ${score}/10<br><br>
                 <div style="font-size: 14px; margin-top: 20px; color: #c5c6c7;">TÍTULO DESBLOQUEADO:</div>
                 <div class="title-display">${icone} ${titulo} ${icone}</div>
             `;
