@@ -4,13 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lógica Quest: O Jogo</title>
-    <!-- Importação da fonte estilo videogame -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- MathJax para renderizar as fórmulas lógicas -->
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-        window.MathJax = { tex: { inlineMath: [['$', '$']] } };
-    </script>
     <style>
         body {
             font-family: 'Press Start 2P', monospace;
@@ -97,29 +91,53 @@
             line-height: 1.5;
             color: #ffeb3b;
         }
-        #next-btn, #restart-btn {
-            display: none;
+        
+        /* Estilos dos botões de navegação */
+        .nav-container {
+            display: flex;
+            gap: 15px;
             margin-top: 25px;
+        }
+        .nav-btn {
+            flex: 1;
+            background: #1f2833;
+            color: #66fcf1;
+            border: 2px solid #66fcf1;
+            padding: 15px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-btn.primary {
             background: #45a29e;
             color: #0b0c10;
-            border: none;
-            padding: 15px 20px;
-            font-family: 'Press Start 2P', monospace;
-            cursor: pointer;
-            width: 100%;
+            border-color: #45a29e;
         }
-        #next-btn:hover, #restart-btn:hover {
+        .nav-btn:hover {
             background: #66fcf1;
+            color: #0b0c10;
         }
-        #quiz-screen, #result-screen {
-            display: none;
-        }
+        
+        #quiz-screen, #result-screen { display: none; }
         .hud {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
             font-size: 12px;
             color: #c5c6c7;
+        }
+        .title-display {
+            font-size: 20px;
+            color: #ffeb3b;
+            text-shadow: 2px 2px #000;
+            margin-top: 15px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -129,10 +147,10 @@
 
     <!-- Tela Inicial -->
     <div id="start-screen" class="container">
-        <p>Selecione a fase para começar a revisão:</p>
-        <button class="menu-btn" onclick="startBlock(0)">FASE 1: Argumentos Básicos (Q1-Q10)</button>
-        <button class="menu-btn" onclick="startBlock(1)">FASE 2: Múltiplas Premissas (Q11-Q20)</button>
-        <button class="menu-btn" onclick="startBlock(2)">FASE 3: Maior Complexidade (Q21-Q30)</button>
+        <p>Selecione a fase para começar:</p>
+        <button class="menu-btn" onclick="startBlock(0)">FASE 1: Argumentos Básicos</button>
+        <button class="menu-btn" onclick="startBlock(1)">FASE 2: Múltiplas Premissas</button>
+        <button class="menu-btn" onclick="startBlock(2)">FASE 3: Maior Complexidade</button>
     </div>
 
     <!-- Tela do Quiz -->
@@ -144,18 +162,22 @@
         <div id="question-text" class="question-text"></div>
         <div id="options" class="options-container"></div>
         <div id="feedback"></div>
-        <button id="next-btn" onclick="nextQuestion()">PRÓXIMA FASE &gt;</button>
+        
+        <!-- Botões de Navegação -->
+        <div class="nav-container">
+            <button class="nav-btn" onclick="returnToHome()">VOLTAR AO MENU</button>
+            <button class="nav-btn primary" id="next-btn" style="display: none;" onclick="nextQuestion()">PRÓXIMA QUESTÃO &gt;</button>
+        </div>
     </div>
 
     <!-- Tela de Resultados -->
     <div id="result-screen" class="container">
-        <h2>FIM DE JOGO</h2>
-        <p id="final-score" style="margin: 30px 0; line-height: 2;"></p>
-        <button id="restart-btn" style="display: block;" onclick="location.reload()">VOLTAR AO MENU PRINCIPAL</button>
+        <h2>FIM DA FASE</h2>
+        <div id="final-score" style="margin: 30px 0; line-height: 2;"></div>
+        <button class="nav-btn primary" style="width: 100%; margin-top: 20px; font-size: 12px;" onclick="returnToHome()">VOLTAR AO MENU PRINCIPAL</button>
     </div>
 
     <script>
-        // Banco de Dados Completo com todas as questões e formatação LaTeX
         const allQuestions = [
             // ================= BLOCO 1 =================
             {
@@ -320,13 +342,13 @@
         let answered = false;
 
         function startBlock(blockIndex) {
-            // Separa as questões de 10 em 10 baseado na escolha
             const start = blockIndex * 10;
             currentBlock = allQuestions.slice(start, start + 10);
             currentIndex = 0;
             score = 0;
             
             document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
             document.getElementById('quiz-screen').style.display = 'block';
             
             loadQuestion();
@@ -340,7 +362,15 @@
             document.getElementById('score').innerText = `XP: ${score * 100}`;
             document.getElementById('question-text').innerHTML = q.q;
             document.getElementById('feedback').innerHTML = '';
-            document.getElementById('next-btn').style.display = 'none';
+            
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.style.display = 'none';
+            
+            if (currentIndex === currentBlock.length - 1) {
+                nextBtn.innerHTML = "VER RESULTADOS &gt;";
+            } else {
+                nextBtn.innerHTML = "PRÓXIMA QUESTÃO &gt;";
+            }
             
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = '';
@@ -352,9 +382,6 @@
                 btn.onclick = () => checkAnswer(index, btn);
                 optionsDiv.appendChild(btn);
             });
-
-            // Força o MathJax a renderizar as novas fórmulas na tela
-            MathJax.typesetPromise();
         }
 
         function checkAnswer(selectedIndex, btn) {
@@ -364,13 +391,13 @@
             const q = currentBlock[currentIndex];
             const allBtns = document.querySelectorAll('.option-btn');
             
-            // Desabilita os botões após a resposta
             allBtns.forEach(b => b.disabled = true);
             
             if (selectedIndex === q.ans) {
                 btn.classList.add('correct');
                 document.getElementById('feedback').innerHTML = `✅ ACERTOU! +100 XP<br><br><strong>Explicação:</strong> ${q.just}`;
                 score++;
+                document.getElementById('score').innerText = `XP: ${score * 100}`;
             } else {
                 btn.classList.add('wrong');
                 allBtns[q.ans].classList.add('correct');
@@ -378,8 +405,6 @@
                 document.getElementById('feedback').innerHTML = `❌ GAME OVER! A correta era a alternativa ${letras[q.ans]}.<br><br><strong>Explicação:</strong> ${q.just}`;
             }
             
-            // Renderiza novamente a matemática, caso o texto da explicação tenha símbolos
-            MathJax.typesetPromise();
             document.getElementById('next-btn').style.display = 'block';
         }
 
@@ -395,7 +420,34 @@
         function showResults() {
             document.getElementById('quiz-screen').style.display = 'none';
             document.getElementById('result-screen').style.display = 'block';
-            document.getElementById('final-score').innerHTML = `Fase Concluída!<br>Acertos: ${score}/10<br>Total de XP: ${score * 100}`;
+            
+            let titulo = "";
+            let icone = "";
+            
+            if (score <= 4) {
+                titulo = "Aprendiz de Lógica";
+                icone = "🌱";
+            } else if (score <= 8) {
+                titulo = "Mestre da Lógica";
+                icone = "⚔️";
+            } else {
+                titulo = "Pai da Lógica";
+                icone = "👑";
+            }
+            
+            document.getElementById('final-score').innerHTML = `
+                Fase Concluída!<br><br>
+                Acertos: ${score}/10<br>
+                Total Ganho: ${score * 100} XP<br><br>
+                <div style="font-size: 14px; margin-top: 20px; color: #c5c6c7;">TÍTULO DESBLOQUEADO:</div>
+                <div class="title-display">${icone} ${titulo} ${icone}</div>
+            `;
+        }
+
+        function returnToHome() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'block';
         }
     </script>
 </body>
