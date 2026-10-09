@@ -159,158 +159,158 @@
         const allQuestions = [
             // ================= BLOCO 1 =================
             {
-                q: "1. Computador e tela: Se o computador estiver ligado, a tela estará acesa. A tela não está acesa. Portanto, o computador não está ligado.[cite: 1]",
-                opts: ["A) $L\\rightarrow T,T...L$[cite: 1]", "B) $L\\rightarrow T,\\neg T::\\neg L$[cite: 1]", "C) $LV~T,\\neg T:L$[cite: 1]", "D) $L\\wedge T,\\neg T::\\neg L$[cite: 1]", "E) $T\\rightarrow L,\\neg T:\\neg L$[cite: 1]"],
-                ans: 1, just: "Modus Tollens: L→Te T permitem concluir -L.[cite: 10]"
+                q: "1. Computador e tela: Se o computador estiver ligado, a tela estará acesa. A tela não está acesa. Portanto, o computador não está ligado.",
+                opts: ["A) L → T, T ∴ L", "B) L → T, ¬T ∴ ¬L", "C) L ∨ T, ¬T ∴ L", "D) L ∧ T, ¬T ∴ ¬L", "E) T → L, ¬T ∴ ¬L"],
+                ans: 1, just: "Modus Tollens: L → T e ¬T permitem concluir ¬L."
             },
             {
-                q: "2. Viagem de Mariana: Mariana viajará para São Paulo ou para o Rio de Janeiro. Mariana não viajará para São Paulo. Portanto, viajará para o Rio de Janeiro.[cite: 1]",
-                opts: ["A) Modus Ponens[cite: 1]", "B) Modus Tollens[cite: 1]", "C) Silogismo Hipotético[cite: 1]", "D) Silogismo Disjuntivo[cite: 1]", "E) Simplificação[cite: 1]"],
-                ans: 3, just: "Silogismo Disjuntivo: Sv Re-S permitem concluir R.[cite: 10]"
+                q: "2. Viagem de Mariana: Mariana viajará para São Paulo ou para o Rio de Janeiro. Mariana não viajará para São Paulo. Portanto, viajará para o Rio de Janeiro.",
+                opts: ["A) Modus Ponens", "B) Modus Tollens", "C) Silogismo Hipotético", "D) Silogismo Disjuntivo", "E) Simplificação"],
+                ans: 3, just: "Silogismo Disjuntivo: S ∨ R e ¬S permitem concluir R."
             },
             {
-                q: "3. Estudo para a prova: Se o aluno estudar para a prova, obterá uma boa nota. O aluno estudou para a prova. Portanto, obterá uma boa nota.[cite: 1]",
-                opts: ["A) $E\\rightarrow N,E::N$[cite: 1]", "B) $E\\rightarrow N,\\neg N::\\neg E$[cite: 1]", "C) $E\\vee N,\\neg E:N$[cite: 1]", "D) $N\\rightarrow E,E::N$[cite: 1]", "E) $E\\rightarrow N,N\\cdot:E$[cite: 1]"],
-                ans: 0, just: "Modus Ponens: $E\\rightarrow N$ Ne E permitem concluir N.[cite: 10]"
+                q: "3. Estudo para a prova: Se o aluno estudar para a prova, obterá uma boa nota. O aluno estudou para a prova. Portanto, obterá uma boa nota.",
+                opts: ["A) E → N, E ∴ N", "B) E → N, ¬N ∴ ¬E", "C) E ∨ N, ¬E ∴ N", "D) N → E, E ∴ N", "E) E → N, N ∴ E"],
+                ans: 0, just: "Modus Ponens: E → N e E permitem concluir N."
             },
             {
-                q: "4. Chuva e jogo: Se chover amanhã, o jogo será cancelado. Se o jogo for cancelado, o estádio ficará vazio. Vai chover amanhã. Portanto, o estádio ficará vazio.[cite: 2]",
-                opts: ["A) $C\\rightarrow J,V\\rightarrow J,C::V$[cite: 2]", "B) $C\\rightarrow J,J\\rightarrow V,\\neg C::V$[cite: 2]", "C) $C\\rightarrow j,J\\rightarrow V,C::V$[cite: 2]", "D) $C~v~J,J\\rightarrow V,C::V$[cite: 2]", "E) $C\\rightarrow V,V\\rightarrow j,C::J$[cite: 2]"],
-                ans: 2, just: "Encadeiam-se C→ JeJV; com C, conclui-se V.[cite: 10]"
+                q: "4. Chuva e jogo: Se chover amanhã, o jogo será cancelado. Se o jogo for cancelado, o estádio ficará vazio. Vai chover amanhã. Portanto, o estádio ficará vazio.",
+                opts: ["A) C → J, V → J, C ∴ V", "B) C → J, J → V, ¬C ∴ V", "C) C → J, J → V, C ∴ V", "D) C ∨ J, J → V, C ∴ V", "E) C → V, V → J, C ∴ J"],
+                ans: 2, just: "Encadeiam-se C → J e J → V; com C, conclui-se V."
             },
             {
-                q: "5. Promoção de Carlos: Carlos será promovido se, e somente se, atingir suas metas. Carlos atingiu suas metas. Portanto, será promovido.[cite: 2]",
-                opts: ["A) $P\\rightarrow M,M::\\neg P$[cite: 2]", "B) $PvM,M...P$[cite: 2]", "C) $P\\leftrightarrow M,\\neg M...\\neg P$[cite: 2]", "D) $M\\rightarrow P,\\neg M::\\neg P$[cite: 2]", "E) $P\\leftrightarrow M,M...P$[cite: 2]"],
-                ans: 4, just: "$P\\leftrightarrow M$ inclui $M\\rightarrow P$; como M, conclui-se P.[cite: 10]"
+                q: "5. Promoção de Carlos: Carlos será promovido se, e somente se, atingir suas metas. Carlos atingiu suas metas. Portanto, será promovido.",
+                opts: ["A) P → M, M ∴ ¬P", "B) P ∨ M, M ∴ P", "C) P ↔ M, ¬M ∴ ¬P", "D) M → P, ¬M ∴ ¬P", "E) P ↔ M, M ∴ P"],
+                ans: 4, just: "P ↔ M inclui M → P; como M, conclui-se P."
             },
             {
-                q: "6. Profissão de Pedro: Pedro é médico ou advogado. Pedro não é médico. Portanto, Pedro é advogado.[cite: 2]",
-                opts: ["A) $1\\wedge A,\\neg M:\\cdot A$[cite: 2]", "B) $M\\rightarrow A,\\neg M::A$[cite: 2]", "C) $M\\vee A,\\neg M::A$[cite: 2]", "D) $Mv~A,M...A$[cite: 2]", "E) $M\\leftrightarrow A,\\neg M::A$[cite: 2]"],
-                ans: 2, just: "Silogismo Disjuntivo: M vA e-M permitem concluir A.[cite: 10]"
+                q: "6. Profissão de Pedro: Pedro é médico ou advogado. Pedro não é médico. Portanto, Pedro é advogado.",
+                opts: ["A) M ∧ A, ¬M ∴ A", "B) M → A, ¬M ∴ A", "C) M ∨ A, ¬M ∴ A", "D) M ∨ A, M ∴ A", "E) M ↔ A, ¬M ∴ A"],
+                ans: 2, just: "Silogismo Disjuntivo: M ∨ A e ¬M permitem concluir A."
             },
             {
-                q: "7. Biblioteca aberta: Se a biblioteca estiver aberta, os estudantes poderão estudar. A biblioteca está aberta. Portanto, os estudantes poderão estudar.[cite: 2]",
-                opts: ["A) Modus Tollens[cite: 2]", "B) Modus Ponens[cite: 2]", "C) Silogismo Disjuntivo[cite: 2]", "D) Dupla Negação[cite: 2]", "E) Silogismo Hipotético[cite: 2]"],
-                ans: 1, just: "Modus Ponens: B → E e B permitem concluir E.[cite: 10]"
+                q: "7. Biblioteca aberta: Se a biblioteca estiver aberta, os estudantes poderão estudar. A biblioteca está aberta. Portanto, os estudantes poderão estudar.",
+                opts: ["A) Modus Tollens", "B) Modus Ponens", "C) Silogismo Disjuntivo", "D) Dupla Negação", "E) Silogismo Hipotético"],
+                ans: 1, just: "Modus Ponens: B → E e B permitem concluir E."
             },
             {
-                q: "8. Falha no servidor: Se o servidor apresentar uma falha, o sistema ficará indisponível. O sistema está disponível. Portanto, o servidor não apresentou uma falha.[cite: 3]",
-                opts: ["A) $F\\rightarrow1,1:.F$[cite: 3]", "B) $F:v|,\\neg1:.F$[cite: 3]", "C) $I\\rightarrow F,\\neg1:\\neg F$[cite: 3]", "D) $F\\rightarrow|,\\neg|:\\neg F$[cite: 3]", "E) $F\\rightarrow1,\\neg F::\\neg I$[cite: 3]"],
-                ans: 3, just: "Modus Tollens: Flel permitem concluir -F.[cite: 10]"
+                q: "8. Falha no servidor: Se o servidor apresentar uma falha, o sistema ficará indisponível. O sistema está disponível. Portanto, o servidor não apresentou uma falha.",
+                opts: ["A) F → I, I ∴ F", "B) F ∨ I, ¬I ∴ F", "C) I → F, ¬I ∴ ¬F", "D) F → I, ¬I ∴ ¬F", "E) F → I, ¬F ∴ ¬I"],
+                ans: 3, just: "Modus Tollens: F → I e ¬I permitem concluir ¬F."
             },
             {
-                q: "9. Preços e garantia: A loja reduzirá os preços ou aumentará o prazo de garantia. A loja não reduzirá os preços. Portanto, aumentará o prazo de garantia.[cite: 3]",
-                opts: ["A) Modus Ponens[cite: 3]", "B) Modus Tollens[cite: 3]", "C) Conjunção[cite: 3]", "D) Silogismo Disjuntivo[cite: 3]", "E) Silogismo Hipotético[cite: 3]"],
-                ans: 3, just: "Silogismo Disjuntivo: P v Ge-P permitem concluir G.[cite: 10]"
+                q: "9. Preços e garantia: A loja reduzirá os preços ou aumentará o prazo de garantia. A loja não reduzirá os preços. Portanto, aumentará o prazo de garantia.",
+                opts: ["A) Modus Ponens", "B) Modus Tollens", "C) Conjunção", "D) Silogismo Disjuntivo", "E) Silogismo Hipotético"],
+                ans: 3, just: "Silogismo Disjuntivo: P ∨ G e ¬P permitem concluir G."
             },
             {
-                q: "10. Trabalho de Ana: Se Ana concluir o trabalho, poderá descansar. Ana concluiu o trabalho. Portanto, poderá descansar.[cite: 3]",
-                opts: ["A) $T\\rightarrow D,T:D$ por Modus Ponens.[cite: 3]", "B) $T\\rightarrow D,\\neg D::\\neg T$ , por Modus Ponens.[cite: 3]", "C) $T\\vee D,\\neg T\\cdot\\cdot\\cdot D$ por Modus Tollens.[cite: 3]", "D) $D\\rightarrow T,T::D$ por Silogismo Hipotético.[cite: 3]", "E) $T\\rightarrow D$, D. T, por Modus Ponens.[cite: 3]"],
-                ans: 0, just: "Modus Ponens: T→ De T permitem concluir D.[cite: 10]"
+                q: "10. Trabalho de Ana: Se Ana concluir o trabalho, poderá descansar. Ana concluiu o trabalho. Portanto, poderá descansar.",
+                opts: ["A) T → D, T ∴ D por Modus Ponens.", "B) T → D, ¬D ∴ ¬T por Modus Ponens.", "C) T ∨ D, ¬T ∴ D por Modus Tollens.", "D) D → T, T ∴ D por Silogismo Hipotético.", "E) T → D, D ∴ T por Modus Ponens."],
+                ans: 0, just: "Modus Ponens: T → D e T permitem concluir D."
             },
 
             // ================= BLOCO 2 =================
             {
-                q: "11. Juros e mercado imobiliário: Se os juros aumentarem, os financiamentos ficarão mais caros. Se os financiamentos ficarem mais caros, as vendas de imóveis diminuirão. Os juros aumentaram. Portanto, as vendas de imóveis diminuirão.[cite: 4]",
-                opts: ["A) Silogismo Disjuntivo[cite: 4]", "B) Modus Tollens[cite: 4]", "C) Silogismo Hipotético[cite: 4]", "D) Simplificação[cite: 4]", "E) Adição[cite: 4]"],
-                ans: 2, just: "Silogismo Hipotético encadeia J→ Fe F V; depois, MP com J.[cite: 10]"
+                q: "11. Juros e mercado imobiliário: Se os juros aumentarem, os financiamentos ficarão mais caros. Se os financiamentos ficarem mais caros, as vendas de imóveis diminuirão. Os juros aumentaram. Portanto, as vendas de imóveis diminuirão.",
+                opts: ["A) Silogismo Disjuntivo", "B) Modus Tollens", "C) Silogismo Hipotético", "D) Simplificação", "E) Adição"],
+                ans: 2, just: "Silogismo Hipotético encadeia J → F e F → V; depois, MP com J."
             },
             {
-                q: "12. Atraso no trabalho: Se o funcionário chegar atrasado, receberá uma advertência. Se receber uma advertência, poderá perder o bônus. O funcionário chegou atrasado. Portanto, poderá perder o bônus.[cite: 4]",
-                opts: ["A) $A\\rightarrow D$ $D\\rightarrow B,A\\therefore B$ usando Modus Ponens duas vezes.[cite: 4]", "B) $A\\rightarrow D,D\\rightarrow B,A\\therefore..B$, usando Modus Tollens duas vezes.[cite: 4]", "C) $A\\rightarrow D,D\\rightarrow B,\\neg A:B$, usando Silogismo Hipotético.[cite: 4]", "D) $A\\vee D$, $D\\rightarrow B,A\\therefore B$ usando Silogismo Disjuntivo.[cite: 4]", "E) $A\\rightarrow D$, $B\\rightarrow D,A::B$, usando Modus Ponens..[cite: 4]"],
-                ans: 0, just: "MP em sequência: A permite D; D permite B.[cite: 10]"
+                q: "12. Atraso no trabalho: Se o funcionário chegar atrasado, receberá uma advertência. Se receber uma advertência, poderá perder o bônus. O funcionário chegou atrasado. Portanto, poderá perder o bônus.",
+                opts: ["A) A → D, D → B, A ∴ B usando Modus Ponens duas vezes.", "B) A → D, D → B, A ∴ B, usando Modus Tollens duas vezes.", "C) A → D, D → B, ¬A ∴ B, usando Silogismo Hipotético.", "D) A ∨ D, D → B, A ∴ B usando Silogismo Disjuntivo.", "E) A → D, B → D, A ∴ B, usando Modus Ponens."],
+                ans: 0, just: "MP em sequência: A permite D; D permite B."
             },
             {
-                q: "13. Campeonato: Se o time vencer a semifinal, disputará a final. Se disputar a final, poderá conquistar o campeonato. O time venceu a semifinal. Portanto, poderá conquistar o campeonato.[cite: 4]",
-                opts: ["A) -S[cite: 4]", "B) -C[cite: 4]", "C) $F\\rightarrow S$[cite: 4]", "D) $S\\rightarrow C$ mas não é possível concluir C.[cite: 4]", "E) C, obtida pelo encadeamento das condicionais e Modus Ponens.[cite: 4]"],
-                ans: 4, just: "S FeF C dão $S\\rightarrow C$ com S, conclui-se C.[cite: 10]"
+                q: "13. Campeonato: Se o time vencer a semifinal, disputará a final. Se disputar a final, poderá conquistar o campeonato. O time venceu a semifinal. Portanto, poderá conquistar o campeonato.",
+                opts: ["A) ¬S", "B) ¬C", "C) F → S", "D) S → C, mas não é possível concluir C.", "E) C, obtida pelo encadeamento das condicionais e Modus Ponens."],
+                ans: 4, just: "S → F e F → C dão S → C; com S, conclui-se C."
             },
             {
-                q: "14. Produto com defeito: Se o produto apresentar defeito, será substituído ou reparado. O produto apresentou defeito. Ele não será substituído. Portanto, será reparado.[cite: 4]",
-                opts: ["A) $D\\rightarrow(S\\wedge R),D,\\neg S:.R$[cite: 4]", "B) D (S v R), D, S. R[cite: 4]", "C) $D\\rightarrow(S\\vee R),\\neg D,\\neg S::R$[cite: 4]", "D) Dv (SAR), D, SR[cite: 4]", "E) $D\\rightarrow S,D,\\neg S::R$[cite: 4]"],
-                ans: 1, just: "De D (S v R) e D, obtemos $S\\vee R$; com -S, obtemos R.[cite: 10]"
+                q: "14. Produto com defeito: Se o produto apresentar defeito, será substituído ou reparado. O produto apresentou defeito. Ele não será substituído. Portanto, será reparado.",
+                opts: ["A) D → (S ∧ R), D, ¬S ∴ R", "B) D → (S ∨ R), D, ¬S ∴ R", "C) D → (S ∨ R), ¬D, ¬S ∴ R", "D) D ∨ (S ∧ R), D, S ∴ R", "E) D → S, D, ¬S ∴ R"],
+                ans: 1, just: "De D → (S ∨ R) e D, obtemos S ∨ R; com ¬S, obtemos R."
             },
             {
-                q: "15. Investimento empresarial: Se a empresa investir em tecnologia e capacitação, sua produtividade aumentará. A empresa investiu em tecnologia e capacitação. Portanto, sua produtividade aumentará.[cite: 5]",
-                opts: ["A) $(T~v~C)\\rightarrow P,T\\wedge C:..P$[cite: 5]", "B) $T\\wedge C\\rightarrow P,T::P$[cite: 5]", "C) $T\\wedge C\\rightarrow P,\\neg T\\wedge\\neg C::P$[cite: 5]", "D) $(T\\wedge C)\\rightarrow P,T\\wedge C:..P$[cite: 5]", "E) $T\\rightarrow(C\\wedge P),T\\wedge C:..P$[cite: 5]"],
-                ans: 3, just: "A premissa $\\mathfrak{E}(T\\wedge C)\\rightarrow P;$ com $T\\wedge C$ por MP, conclui-se P.[cite: 10]"
+                q: "15. Investimento empresarial: Se a empresa investir em tecnologia e capacitação, sua produtividade aumentará. A empresa investiu em tecnologia e capacitação. Portanto, sua produtividade aumentará.",
+                opts: ["A) (T ∨ C) → P, T ∧ C ∴ P", "B) T ∧ C → P, T ∴ P", "C) T ∧ C → P, ¬T ∧ ¬C ∴ P", "D) (T ∧ C) → P, T ∧ C ∴ P", "E) T → (C ∧ P), T ∧ C ∴ P"],
+                ans: 3, just: "A premissa é (T ∧ C) → P; com T ∧ C por MP, conclui-se P."
             },
             {
-                q: "16. Trânsito e reunião: Se o trânsito estiver intenso, chegarei atrasado. Se eu chegar atrasado, perderei a reunião. Não perdi a reunião. Portanto, o trânsito não estava intenso.[cite: 5]",
-                opts: ["A) Modus Ponens duas vezes.[cite: 5]", "B) Silogismo Disjuntivo.[cite: 5]", "C) Modus Tollens aplicado regressivamente às condicionais.[cite: 5]", "D) Simplificação.[cite: 5]", "E) Adição.[cite: 5]"],
-                ans: 2, just: "De-R, MT dá A; depois, MT dá -T.[cite: 10]"
+                q: "16. Trânsito e reunião: Se o trânsito estiver intenso, chegarei atrasado. Se eu chegar atrasado, perderei a reunião. Não perdi a reunião. Portanto, o trânsito não estava intenso.",
+                opts: ["A) Modus Ponens duas vezes.", "B) Silogismo Disjuntivo.", "C) Modus Tollens aplicado regressivamente às condicionais.", "D) Simplificação.", "E) Adição."],
+                ans: 2, just: "De ¬R, MT dá ¬A; depois, MT dá ¬T."
             },
             {
-                q: "17. Inflação e economia: Se a inflação diminuir, o poder de compra aumentará. Se o poder de compra aumentar, o consumo crescerá. Se o consumo crescer, a economia poderá se expandir. A inflação diminuiu. Portanto, a economia poderá se expandir.[cite: 5]",
-                opts: ["A) -E[cite: 5]", "B) $I\\rightarrow E$ mas não se pode concluir E.[cite: 5]", "C) IAPACE[cite: 5]", "D) $(1\\rightarrow P,P\\rightarrow C,C\\rightarrow E,\\neg1:..E$[cite: 5]", "E) IP, PC, CE, I E[cite: 5]"],
-                ans: 4, just: "Encadeiam-se IP, $P\\rightarrow C~e~C\\rightarrow E$ com I, conclui-se E.[cite: 10]"
+                q: "17. Inflação e economia: Se a inflação diminuir, o poder de compra aumentará. Se o poder de compra aumentar, o consumo crescerá. Se o consumo crescer, a economia poderá se expandir. A inflação diminuiu. Portanto, a economia poderá se expandir.",
+                opts: ["A) ¬E", "B) I → E, mas não se pode concluir E.", "C) I ∧ P ∧ C ∴ E", "D) I → P, P → C, C → E, ¬I ∴ E", "E) I → P, P → C, C → E, I ∴ E"],
+                ans: 4, just: "Encadeiam-se I → P, P → C e C → E; com I, conclui-se E."
             },
             {
-                q: "18. Aprovação na disciplina: Se o estudante entregar o trabalho e participar do seminário, será aprovado na disciplina. O estudante entregou o trabalho. Ele participou do seminário. Portanto, será aprovado na disciplina.[cite: 5]",
-                opts: ["A) $(T~v~S)\\rightarrow A,T,S...A$[cite: 5]", "B) $T\\wedge S\\rightarrow A,T,S::A$[cite: 5]", "C) $T\\wedge S\\rightarrow A,T\\wedge S::A$[cite: 5]", "D) $T\\rightarrow A,S::A$[cite: 5]", "E) $T\\wedge S\\rightarrow A,\\neg T,\\neg S::A$[cite: 5]"],
-                ans: 2, just: "De Te S formamos T A S; com $(T\\wedge S)\\rightarrow A,$ concluímos A.[cite: 10]"
+                q: "18. Aprovação na disciplina: Se o estudante entregar o trabalho e participar do seminário, será aprovado na disciplina. O estudante entregou o trabalho. Ele participou do seminário. Portanto, será aprovado na disciplina.",
+                opts: ["A) (T ∨ S) → A, T, S ∴ A", "B) T ∧ S → A, T, S ∴ A", "C) T ∧ S → A, T ∧ S ∴ A", "D) T → A, S ∴ A", "E) T ∧ S → A, ¬T, ¬S ∴ A"],
+                ans: 2, just: "De T e S formamos T ∧ S; com (T ∧ S) → A, concluímos A."
             },
             {
-                q: "19. Atualização do aplicativo: Se o aplicativo for atualizado, terá novos recursos ou melhor desempenho. O aplicativo foi atualizado. Ele não apresenta novos recursos. Portanto, terá melhor desempenho.[cite: 6]",
-                opts: ["A) A→ (NvD), A, -N. D[cite: 6]", "B) $A\\rightarrow(N\\wedge D),A,\\neg N\\cdot\\cdot\\cdot D$[cite: 6]", "C) $A\\rightarrow(N\\vee D),\\neg A,\\neg N::D$[cite: 6]", "D) AN, A, -N. D[cite: 6]", "E) A v (ND), A, -N. D[cite: 6]"],
-                ans: 0, just: "MP produz $N\\vee D$ com -N, o Silogismo Disjuntivo dá D.[cite: 11]"
+                q: "19. Atualização do aplicativo: Se o aplicativo for atualizado, terá novos recursos ou melhor desempenho. O aplicativo foi atualizado. Ele não apresenta novos recursos. Portanto, terá melhor desempenho.",
+                opts: ["A) A → (N ∨ D), A, ¬N ∴ D", "B) A → (N ∧ D), A, ¬N ∴ D", "C) A → (N ∨ D), ¬A, ¬N ∴ D", "D) A → N, A, ¬N ∴ D", "E) A ∨ (N ∧ D), A, ¬N ∴ D"],
+                ans: 0, just: "MP produz N ∨ D; com ¬N, o Silogismo Disjuntivo dá D."
             },
             {
-                q: "20. Energia e computadores: Se a energia acabar, os computadores desligarão. Se os computadores desligarem, o trabalho será interrompido. O trabalho não foi interrompido. Portanto, a energia não acabou.[cite: 6]",
-                opts: ["A) E, por Modus Ponens.[cite: 6]", "B) C, por Silogismo Disjuntivo.[cite: 6]", "C) -T, por Modus Tollens.[cite: 6]", "D) -E, por aplicação de Modus Tollens às condicionais.[cite: 6]", "E) T, por Silogismo Hipotético.[cite: 6]"],
-                ans: 3, just: "MT regressivo: -T implica C, $e\\neg C$ implica -E.[cite: 11]"
+                q: "20. Energia e computadores: Se a energia acabar, os computadores desligarão. Se os computadores desligarem, o trabalho será interrompido. O trabalho não foi interrompido. Portanto, a energia não acabou.",
+                opts: ["A) E, por Modus Ponens.", "B) C, por Silogismo Disjuntivo.", "C) ¬T, por Modus Tollens.", "D) ¬E, por aplicação de Modus Tollens às condicionais.", "E) T, por Silogismo Hipotético."],
+                ans: 3, just: "MT regressivo: ¬T implica ¬C, e ¬C implica ¬E."
             },
 
             // ================= BLOCO 3 =================
             {
-                q: "21. Lucro empresarial: A empresa terá lucro se, e somente se, suas receitas superarem suas despesas. As receitas da empresa superaram suas despesas. Portanto, a empresa terá lucro.[cite: 7]",
-                opts: ["A) $L\\rightarrow R,R::\\neg L$[cite: 7]", "B) $L\\leftrightarrow R,R::L$[cite: 7]", "C) $~L\\vee R,\\neg R::L$[cite: 7]", "D) $R\\rightarrow L,\\neg R::\\neg L$[cite: 7]", "E) $L\\leftrightarrow R,\\neg R::L$[cite: 7]"],
-                ans: 1, just: "LR inclui R→ L; de R, conclui-se L.[cite: 11]"
+                q: "21. Lucro empresarial: A empresa terá lucro se, e somente se, suas receitas superarem suas despesas. As receitas da empresa superaram suas despesas. Portanto, a empresa terá lucro.",
+                opts: ["A) L → R, R ∴ ¬L", "B) L ↔ R, R ∴ L", "C) L ∨ R, ¬R ∴ L", "D) R → L, ¬R ∴ ¬L", "E) L ↔ R, ¬R ∴ L"],
+                ans: 1, just: "L ↔ R inclui R → L; de R, conclui-se L."
             },
             {
-                q: "22. Eleição e promessas: Se o candidato vencer a eleição, assumirá o cargo. Se assumir o cargo, deverá cumprir suas promessas. O candidato não cumprirá suas promessas. Portanto, não vencerá a eleição.[cite: 7]",
-                opts: ["A) V, por Modus Ponens.[cite: 7]", "B) -A, por Modus Ponens.[cite: 7]", "C) -V, por aplicação de Modus Tollens às condicionais.[cite: 7]", "D) P, por Silogismo Hipotético.[cite: 7]", "E) $\\neg P::V$ por Silogismo Disjuntivo.[cite: 7]"],
-                ans: 2, just: "De P, MT dá A; de A, MT dá -V.[cite: 11]"
+                q: "22. Eleição e promessas: Se o candidato vencer a eleição, assumirá o cargo. Se assumir o cargo, deverá cumprir suas promessas. O candidato não cumprirá suas promessas. Portanto, não vencerá a eleição.",
+                opts: ["A) V, por Modus Ponens.", "B) ¬A, por Modus Ponens.", "C) ¬V, por aplicação de Modus Tollens às condicionais.", "D) P, por Silogismo Hipotético.", "E) ¬P ∴ V por Silogismo Disjuntivo."],
+                ans: 2, just: "De ¬P, MT dá ¬A; de ¬A, MT dá ¬V."
             },
             {
-                q: "23. Laboratório e experimentos: Se o laboratório estiver funcionando, os pesquisadores realizarão os experimentos. Se os pesquisadores realizarem os experimentos, publicarão os resultados. O laboratório está funcionando. Portanto, os resultados serão publicados.[cite: 7]",
-                opts: ["A) $L\\rightarrow E,E\\rightarrow P,L::P$[cite: 7]", "B) $L\\rightarrow E,P\\rightarrow E,L:..P$[cite: 7]", "C) $L~v~E,E\\rightarrow P,L::P$[cite: 7]", "D) $L\\rightarrow E,E\\rightarrow P,\\neg L:..P$[cite: 7]", "E) $L\\rightarrow E,E\\rightarrow P,P::L$[cite: 7]"],
-                ans: 0, just: "L EeEP formam $L\\rightarrow P;$ com L, conclui-se P.[cite: 11]"
+                q: "23. Laboratório e experimentos: Se o laboratório estiver funcionando, os pesquisadores realizarão os experimentos. Se os pesquisadores realizarem os experimentos, publicarão os resultados. O laboratório está funcionando. Portanto, os resultados serão publicados.",
+                opts: ["A) L → E, E → P, L ∴ P", "B) L → E, P → E, L ∴ P", "C) L ∨ E, E → P, L ∴ P", "D) L → E, E → P, ¬L ∴ P", "E) L → E, E → P, P ∴ L"],
+                ans: 0, just: "L → E e E → P formam L → P; com L, conclui-se P."
             },
             {
-                q: "24. Compra de celular: Se Lucas comprar um celular, comprará um modelo novo ou usado. Lucas não comprará um modelo novo. Logo, se Lucas comprar um celular, comprará um modelo usado.[cite: 7]",
-                opts: ["A) $C\\rightarrow(N\\wedge U),\\neg N::C\\rightarrow U$[cite: 7]", "B) $C~v(N~v~U),\\neg N::C\\rightarrow U$[cite: 7]", "C) $C\\rightarrow(N~\\vee U),N::C\\rightarrow U$[cite: 7]", "D) $C\\rightarrow(N~v~U),\\neg U:C\\rightarrow N$[cite: 7]", "E) $C\\rightarrow(N~v~U),\\neg N::C\\rightarrow U$[cite: 7]"],
-                ans: 4, just: "Dentro da hipótese C, $N~v\\cup e\\neg N$ deixam U; logo $C\\rightarrow U$[cite: 11]"
+                q: "24. Compra de celular: Se Lucas comprar um celular, comprará um modelo novo ou usado. Lucas não comprará um modelo novo. Logo, se Lucas comprar um celular, comprará um modelo usado.",
+                opts: ["A) C → (N ∧ U), ¬N ∴ C → U", "B) C ∨ (N ∨ U), ¬N ∴ C → U", "C) C → (N ∨ U), N ∴ C → U", "D) C → (N ∨ U), ¬U ∴ C → N", "E) C → (N ∨ U), ¬N ∴ C → U"],
+                ans: 4, just: "Dentro da hipótese C, N ∨ U e ¬N deixam U; logo C → U."
             },
             {
-                q: "25. Regra justa: Se a regra for justa e aplicada igualmente a todos, será respeitada. A regra é justa e aplicada igualmente a todos. Portanto, será respeitada.[cite: 8]",
-                opts: ["A) $(\\rfloor v|)\\rightarrow R,\\rfloor\\wedge1:..R$[cite: 8]", "B) $(\\rfloor\\wedge I)\\rightarrow R,\\rfloor\\wedge1::R$[cite: 8]", "C) $(\\rfloor\\wedge I)\\rightarrow R,\\neg\\rfloor\\wedge\\neg1:R$[cite: 8]", "D) $J\\rightarrow1,1:R$[cite: 8]", "E) $J\\leftrightarrow1,J::R$[cite: 8]"],
-                ans: 1, just: "( )  ReJA I permitem concluir R por MP.[cite: 11]"
+                q: "25. Regra justa: Se a regra for justa e aplicada igualmente a todos, será respeitada. A regra é justa e aplicada igualmente a todos. Portanto, será respeitada.",
+                opts: ["A) (J ∨ I) → R, J ∧ I ∴ R", "B) (J ∧ I) → R, J ∧ I ∴ R", "C) (J ∧ I) → R, ¬J ∧ ¬I ∴ R", "D) J → I, I ∴ R", "E) J ↔ I, J ∴ R"],
+                ans: 1, just: "(J ∧ I) → R e J ∧ I permitem concluir R por MP."
             },
             {
-                q: "26. Segurança do sistema: Se o sistema estiver seguro, haverá autenticação em duas etapas. Se houver autenticação em duas etapas, o acesso não autorizado será dificultado. O acesso não autorizado não foi dificultado. Portanto, o sistema não estava seguro.[cite: 8]",
-                opts: ["A) S, por Modus Ponens.[cite: 8]", "B) -A, mas não é possível concluir nada sobre S.[cite: 8]", "C) D, por Silogismo Hipotético.[cite: 8]", "D) -S, por encadeamento das condicionais e Modus Tollens.[cite: 8]", "E) SA, por bicondicional.[cite: 8]"],
-                ans: 3, just: "De-D, MT dá A; depois, de $S\\rightarrow A,$ MT dá -S.[cite: 11]"
+                q: "26. Segurança do sistema: Se o sistema estiver seguro, haverá autenticação em duas etapas. Se houver autenticação em duas etapas, o acesso não autorizado será dificultado. O acesso não autorizado não foi dificultado. Portanto, o sistema não estava seguro.",
+                opts: ["A) S, por Modus Ponens.", "B) ¬A, mas não é possível concluir nada sobre S.", "C) D, por Silogismo Hipotético.", "D) ¬S, por encadeamento das condicionais e Modus Tollens.", "E) S ∧ A, por bicondicional."],
+                ans: 3, just: "De ¬D, MT dá ¬A; depois, de S → A, MT dá ¬S."
             },
             {
-                q: "27. Raciocínio lógico: Se Marina estudar matemática, melhorará seu raciocínio lógico. Se melhorar seu raciocínio lógico, resolverá problemas com mais facilidade. Marina não resolve problemas com mais facilidade. Portanto, Marina não estudou matemática.[cite: 8]",
-                opts: ["A) M, por Modus Ponens.[cite: 8]", "B) -R, mas não se pode concluir -M.[cite: 8]", "C) -M, por aplicação de Modus Tollens às condicionais.[cite: 8]", "D) P, por Silogismo Hipotético.[cite: 8]", "E) $M\\rightarrow P$ P. M.[cite: 8]"],
-                ans: 2, just: "De P, MT dá R; depois, de $M\\rightarrow R$, MT dá - M.[cite: 11]"
+                q: "27. Raciocínio lógico: Se Marina estudar matemática, melhorará seu raciocínio lógico. Se melhorar seu raciocínio lógico, resolverá problemas com mais facilidade. Marina não resolve problemas com mais facilidade. Portanto, Marina não estudou matemática.",
+                opts: ["A) M, por Modus Ponens.", "B) ¬R, mas não se pode concluir ¬M.", "C) ¬M, por aplicação de Modus Tollens às condicionais.", "D) P, por Silogismo Hipotético.", "E) M → P, P ∴ M."],
+                ans: 2, just: "De ¬P, MT dá ¬R; depois, de M → R, MT dá ¬M."
             },
             {
-                q: "28. Aprovação de projeto: Se o projeto for aprovado, receberá financiamento e terá início no próximo semestre. Se receber financiamento e tiver início no próximo semestre, contratará novos funcionários. O projeto foi aprovado. Portanto, contratará novos funcionários.[cite: 8]",
-                opts: ["A) $A\\rightarrow(F\\vee I),(F\\wedge I)\\rightarrow C,A\\%//C$[cite: 8]", "B) $A\\rightarrow(F\\wedge I),(F\\wedge I)\\rightarrow C,A::C$[cite: 8]", "C) $A\\rightarrow(F\\wedge I),(F\\vee I)\\rightarrow C,A::C$[cite: 8]", "D) $A\\rightarrow(F\\wedge I),C\\rightarrow(F\\wedge I),A::C$[cite: 8]", "E) $A~v(F\\wedge I),(F\\wedge I)\\rightarrow C,A:.C$[cite: 8]"],
-                ans: 1, just: "A implica FA  ; essa conjunção ativa $(F\\wedge I)\\rightarrow C$[cite: 11]"
+                q: "28. Aprovação de projeto: Se o projeto for aprovado, receberá financiamento e terá início no próximo semestre. Se receber financiamento e tiver início no próximo semestre, contratará novos funcionários. O projeto foi aprovado. Portanto, contratará novos funcionários.",
+                opts: ["A) A → (F ∨ I), (F ∧ I) → C, A ∴ C", "B) A → (F ∧ I), (F ∧ I) → C, A ∴ C", "C) A → (F ∧ I), (F ∨ I) → C, A ∴ C", "D) A → (F ∧ I), C → (F ∧ I), A ∴ C", "E) A ∨ (F ∧ I), (F ∧ I) → C, A ∴ C"],
+                ans: 1, just: "A implica F ∧ I; essa conjunção ativa (F ∧ I) → C."
             },
             {
-                q: "29. Evento presencial ou on-line: O evento acontecerá presencialmente ou on-line. Se acontecer presencialmente, será realizado no auditório. Se acontecer on-line, será transmitido pela internet. O evento não será realizado no auditório. Portanto, será transmitido pela internet.[cite: 9]",
-                opts: ["A) $P\\vee O$, $P\\rightarrow A$, $O\\rightarrow T,\\neg A:T$ por Modus Ponens.[cite: 9]", "B) $P\\vee O$, $P\\rightarrow A$, $O\\rightarrow T,\\neg A:\\neg T$ por Modus Tollens.[cite: 9]", "C) РЛО, РА, OT, A T, por Simplificação.[cite: 9]", "D) $P\\vee O$, $P\\rightarrow A,$ $O\\rightarrow T,\\neg A::T$ por Modus Tollens, Silogismo Disjuntivo e Modus Ponens.[cite: 9]", "E) $P\\vee O$, $P\\rightarrow A$ $O\\rightarrow T,A:T$ por Silogismo Hipotético.[cite: 9]"],
-                ans: 3, just: "MT dá -P; SD dá O; MP dá T.[cite: 11]"
+                q: "29. Evento presencial ou on-line: O evento acontecerá presencialmente ou on-line. Se acontecer presencialmente, será realizado no auditório. Se acontecer on-line, será transmitido pela internet. O evento não será realizado no auditório. Portanto, será transmitido pela internet.",
+                opts: ["A) P ∨ O, P → A, O → T, ¬A ∴ T por Modus Ponens.", "B) P ∨ O, P → A, O → T, ¬A ∴ ¬T por Modus Tollens.", "C) P ∧ O, P → A, O → T, ¬A ∴ T, por Simplificação.", "D) P ∨ O, P → A, O → T, ¬A ∴ T por Modus Tollens, Silogismo Disjuntivo e Modus Ponens.", "E) P ∨ O, P → A, O → T, A ∴ T por Silogismo Hipotético."],
+                ans: 3, just: "MT dá ¬P; SD dá O; MP dá T."
             },
             {
-                q: "30. Contrato e treinamento: Se Roberto aceitar a proposta e assinar o contrato, começará a trabalhar na segunda-feira. Se começar a trabalhar na segunda-feira, receberá treinamento. Roberto aceitou a proposta e assinou o contrato. Portanto, receberá treinamento.[cite: 9]",
-                opts: ["A) (A v C) → S, ST, Ал[cite: 9]", "B) $(A\\wedge C)\\rightarrow S,T\\rightarrow S,A\\wedge C::T$[cite: 9]", "C) $(A\\wedge C)\\rightarrow S,S\\rightarrow T,\\neg(A\\wedge C)::T$[cite: 9]", "D) $(A\\wedge C)\\rightarrow S,S\\rightarrow T,A\\wedge C::S$, sem possibilidade de concluir T.[cite: 9]", "E) (Ал ) S, SΤ, Α ΛСТ[cite: 9]"],
-                ans: 4, just: "Ал C permite concluir S; de S→ T, concluímos T.[cite: 11]"
+                q: "30. Contrato e treinamento: Se Roberto aceitar a proposta e assinar o contrato, começará a trabalhar na segunda-feira. Se começar a trabalhar na segunda-feira, receberá treinamento. Roberto aceitou a proposta e assinou o contrato. Portanto, receberá treinamento.",
+                opts: ["A) (A ∨ C) → S, S → T, A ∧ C ∴ T", "B) (A ∧ C) → S, T → S, A ∧ C ∴ T", "C) (A ∧ C) → S, S → T, ¬(A ∧ C) ∴ T", "D) (A ∧ C) → S, S → T, A ∧ C ∴ S, sem possibilidade de concluir T.", "E) (A ∧ C) → S, S → T, A ∧ C ∴ T"],
+                ans: 4, just: "A ∧ C permite concluir S; de S → T, concluímos T."
             }
         ];
 
