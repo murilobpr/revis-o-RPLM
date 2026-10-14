@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lógica Quest: O Jogo</title>
-    <link href="[https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap](https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap)" rel="stylesheet">
+    <!-- Fonte pixelada estilo fliperama clássico -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Press Start 2P', monospace;
-            background-color: #0b0c10;
-            color: #9400D3;
+            background-color: #0d0221;
+            color: #e9d5ff;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -18,42 +19,45 @@
             text-align: center;
         }
         h1 {
-            color: #45a29e;
-            text-shadow: 2px 2px #000;
-            font-size: 24px;
+            color: #d946ef;
+            text-shadow: 3px 3px #4a044e;
+            font-size: 22px;
             margin-bottom: 30px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .container {
             max-width: 900px;
             width: 100%;
-            background: #1f2833;
+            background: #1a0933;
             padding: 30px;
-            border: 4px solid #9400D3;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #9400D3;
+            border: 4px solid #c084fc;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5);
         }
         .menu-btn {
             background-color: transparent;
-            color: #9400D3;
-            border: 2px solid #9400D3;
-            padding: 15px 20px;
-            margin: 10px;
+            color: #e9d5ff;
+            border: 2px solid #c084fc;
+            padding: 18px 20px;
+            margin: 12px;
             font-family: 'Press Start 2P', monospace;
-            font-size: 14px;
+            font-size: 11px;
             cursor: pointer;
             transition: 0.3s;
-            width: 80%;
+            width: 85%;
+            border-radius: 6px;
         }
         .menu-btn:hover {
-            background-color: #9400D3;
-            color: #0b0c10;
+            background-color: #c084fc;
+            color: #0d0221;
+            box-shadow: 0 0 15px #c084fc;
         }
         .question-text {
-            font-size: 14px;
-            line-height: 1.8;
+            font-size: 11px;
+            line-height: 2.2;
             margin-bottom: 25px;
             text-align: left;
+            color: #f3e8ff;
         }
         .options-container {
             display: flex;
@@ -61,35 +65,45 @@
             gap: 15px;
         }
         .option-btn {
-            background: #0b0c10;
-            color: #c5c6c7;
-            border: 2px solid #45a29e;
+            background: #0d0221;
+            color: #e9d5ff;
+            border: 2px solid #9333ea;
             padding: 15px;
-            font-family: monospace;
-            font-size: 16px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
             text-align: left;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 6px;
+            line-height: 1.6;
+            transition: 0.2s;
         }
         .option-btn:hover:not(:disabled) {
-            border-color: #9400D3;
-            background: #1f2833;
+            border-color: #d946ef;
+            background: #2e1065;
+            box-shadow: 0 0 10px #d946ef;
         }
         .correct {
-            background-color: #28a745 !important;
-            color: #fff !important;
-            border-color: #fff !important;
+            background-color: #166534 !important;
+            color: #bbf7d0 !important;
+            border-color: #4ade80 !important;
+            box-shadow: 0 0 15px #22c55e !important;
         }
         .wrong {
-            background-color: #dc3545 !important;
-            color: #fff !important;
-            border-color: #fff !important;
+            background-color: #7f1d1d !important;
+            color: #fecaca !important;
+            border-color: #f87171 !important;
+            box-shadow: 0 0 15px #ef4444 !important;
         }
         #feedback {
             margin-top: 25px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: #9400D3;
+            font-size: 10px;
+            line-height: 1.8;
+            color: #fde047;
+            text-align: left;
+            background: #0d0221;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px dashed #9333ea;
         }
         
         .nav-container {
@@ -99,38 +113,43 @@
         }
         .nav-btn {
             flex: 1;
-            background: #1f2833;
-            color: #9400D3;
-            border: 2px solid #9400D3;
+            background: #2e1065;
+            color: #e9d5ff;
+            border: 2px solid #c084fc;
             padding: 15px;
             font-family: 'Press Start 2P', monospace;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
             transition: 0.3s;
+            border-radius: 6px;
         }
         .nav-btn.primary {
-            background: #45a29e;
-            color: #0b0c10;
-            border-color: #45a29e;
+            background: #9333ea;
+            color: #ffffff;
+            border-color: #d946ef;
         }
         .nav-btn:hover {
-            background: #9400D3;
-            color: #0b0c10;
+            background: #c084fc;
+            color: #0d0221;
+            box-shadow: 0 0 15px #c084fc;
         }
         
         #quiz-screen, #result-screen { display: none; }
         .hud {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 12px;
-            color: #c5c6c7;
+            margin-bottom: 25px;
+            font-size: 10px;
+            color: #c084fc;
+            border-bottom: 2px solid #4a044e;
+            padding-bottom: 10px;
         }
         .title-display {
-            font-size: 20px;
-            color: #ffeb3b;
+            font-size: 13px;
+            color: #fde047;
             text-shadow: 2px 2px #000;
-            margin-top: 15px;
+            margin-top: 20px;
+            line-height: 1.8;
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
@@ -146,7 +165,7 @@
 
     <!-- Tela Inicial -->
     <div id="start-screen" class="container">
-        <p>Selecione a fase para começar(Com caneta e papel, escudo e espada a sua vitória sera consquitada):</p>
+        <p style="font-size: 11px; line-height: 2; margin-bottom: 20px;">SELECIONE A FASE:</p>
         <button class="menu-btn" onclick="startBlock(0)">FASE 1: Argumentos Básicos</button>
         <button class="menu-btn" onclick="startBlock(1)">FASE 2: Múltiplas Premissas</button>
         <button class="menu-btn" onclick="startBlock(2)">FASE 3: Maior Complexidade</button>
@@ -165,15 +184,15 @@
         <!-- Botões de Navegação -->
         <div class="nav-container">
             <button class="nav-btn" onclick="returnToHome()">VOLTAR AO MENU</button>
-            <button class="nav-btn primary" id="next-btn" style="display: none;" onclick="nextQuestion()">PRÓXIMA QUESTÃO &gt;</button>
+            <button class="nav-btn primary" id="next-btn" style="display: none;" onclick="nextQuestion()">PRÓXIMA &gt;</button>
         </div>
     </div>
 
     <!-- Tela de Resultados -->
     <div id="result-screen" class="container">
-        <h2>FIM DA FASE</h2>
-        <div id="final-score" style="margin: 30px 0; line-height: 2;"></div>
-        <button class="nav-btn primary" style="width: 100%; margin-top: 20px; font-size: 12px;" onclick="returnToHome()">VOLTAR AO MENU PRINCIPAL</button>
+        <h2 style="color: #d946ef; font-size: 16px;">FIM DA FASE</h2>
+        <div id="final-score" style="margin: 30px 0; line-height: 2.2; font-size: 11px;"></div>
+        <button class="nav-btn primary" style="width: 100%; margin-top: 20px; font-size: 10px; padding: 18px;" onclick="returnToHome()">VOLTAR AO MENU PRINCIPAL</button>
     </div>
 
     <script>
@@ -368,7 +387,7 @@
             if (currentIndex === currentBlock.length - 1) {
                 nextBtn.innerHTML = "VER RESULTADOS &gt;";
             } else {
-                nextBtn.innerHTML = "PRÓXIMA QUESTÃO &gt;";
+                nextBtn.innerHTML = "PRÓXIMA &gt;";
             }
             
             const optionsDiv = document.getElementById('options');
@@ -404,7 +423,6 @@
                 document.getElementById('feedback').innerHTML = `❌ INCORRETO! A correta era a alternativa ${letras[q.ans]}.<br><br><strong>Explicação:</strong> ${q.just}`;
             }
             
-            // Agora o botão de avançar aparecerá corretamente após a resposta
             document.getElementById('next-btn').style.display = 'inline-block';
         }
 
@@ -426,19 +444,19 @@
             
             if (score <= 4) {
                 titulo = "Aprendiz de Lógica";
-                icone = "🌱";
+                
             } else if (score <= 8) {
                 titulo = "Mestre da Lógica";
-                icone = "⚔️";
+                
             } else {
                 titulo = "Pai da Lógica";
-                icone = "👑";
+                
             }
             
             document.getElementById('final-score').innerHTML = `
                 Fase Concluída!<br><br>
                 Pontuação Final: ${score}/10<br><br>
-                <div style="font-size: 14px; margin-top: 20px; color: #c5c6c7;">TÍTULO DESBLOQUEADO:</div>
+                <div style="font-size: 10px; margin-top: 15px; color: #c084fc;">TÍTULO DESBLOQUEADO:</div>
                 <div class="title-display">${icone} ${titulo} ${icone}</div>
             `;
         }
